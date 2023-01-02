@@ -17,6 +17,7 @@ module.exports = {
     assetModuleFilename: 'assets/images/[hash][ext][query]',
     clean: true
   },
+  mode: 'development',
   resolve: {
     extensions: ['.js', '.html', 'css'],
     alias: {
@@ -26,7 +27,6 @@ module.exports = {
       '@assets': path.resolve(__dirname, 'src/assets/'),
     }
   },
-  mode: 'production',
   module: {
     rules: [
       {
@@ -78,6 +78,8 @@ module.exports = {
       ]
     }),
     new Dotenv(),
+    new CleanWebpackPlugin()
+    
   ],
   optimization: {
     minimize: true,
