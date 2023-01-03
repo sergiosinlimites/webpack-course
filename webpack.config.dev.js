@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /** @type {import('webpack').Configuration} */
 
@@ -18,6 +19,7 @@ module.exports = {
     clean: true
   },
   mode: 'development',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.html', 'css'],
     alias: {
@@ -78,14 +80,17 @@ module.exports = {
       ]
     }),
     new Dotenv(),
-    new CleanWebpackPlugin()
-    
+    new CleanWebpackPlugin(),
+    new BundleAnalyzerPlugin()
   ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserPlugin()
-    ]
-  }
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+      watch: true
+    },
+    compress: true,
+    historyApiFallback: true,
+    port: 3006,
+    open: true
+  },
 }
